@@ -1,7 +1,7 @@
 {
   "name": "gosh",
   "version": "1.0.0",
-  "description": "Great Object Storage Hole",
+  "description": "Glorious Object Storage Hole",
   "main": "index.js",
   "author": "Matt Wynne",
   "license": "MIT",
