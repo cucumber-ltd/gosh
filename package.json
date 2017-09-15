@@ -2,7 +2,7 @@
   "name": "gosh",
   "version": "1.0.0",
   "description": "Glorious Object Storage Hole",
-  "main": "index.js",
+  "main": "lib/gosh.js",
   "author": "Matt Wynne",
   "license": "MIT",
   "devDependencies": {
