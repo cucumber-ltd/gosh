@@ -49,7 +49,24 @@ describe('Gosh', () => {
     assert.deepEqual(Array.from(people.values()), [dave])
   })
 
-  it("allows multiple indices")
+  it("allows multiple indices", () => {
+    const People = buildStore(withIndexOn('age'), withIndexOn('hair'))
+    const people = new People()
+    const dave = { name: 'Dave', age: 22, hair: 'red' }
+    people.put(dave)
+    assert.deepEqual(people.get({ hair: 'red' }), dave)
+  })
+
+  it("deletes from all indices", () => {
+    const People = buildStore(withIndexOn('age'), withIndexOn('hair'))
+    const people = new People()
+    const dave = { name: 'Dave', age: 22, hair: 'red' }
+    people.put(dave)
+    people.delete({ hair: 'red' })
+    assert.deepEqual(people.get({ hair: 'red' }), null)
+    assert.deepEqual(people.get({ age: 22 }), null)
+  })
+
   it("allows a multi-property index")
   it("allows a custom index using a function")
   it("refuses to store objects that don't have an indexed property")
