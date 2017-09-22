@@ -14,6 +14,18 @@ describe('Gosh', () => {
     assert.equal(actual, dave)
   })
 
+  it('matches exact values only, by default', () => {
+    const People = buildStore(withIndexOn('name'))
+    const people = new People()
+    const dave = { name: 'Dave' }
+    people.put(dave)
+    assert.equal(people.get({ name: 'Dave' }), dave)
+    assert.equal(people.get({ name: 'DAVE' }), null)
+    assert.equal(people.get({ name: 'dave' }), null)
+  })
+
+  it('throws an error when you try to query by an index that doesn\'t exist')
+
   it("deletes items", () => {
     const People = buildStore(withIndexOn('age'))
     const people = new People()
@@ -33,7 +45,7 @@ describe('Gosh', () => {
     assert.equal(otherPeople.get({ age: 22}), null)
   })
 
-  it("lets you check for a value", () => {
+  it("lets you check whether a value exists in the store", () => {
     const People = buildStore(withIndexOn('age'))
     const people = new People()
     const dave = { name: 'Dave', age: 22 }
@@ -55,6 +67,7 @@ describe('Gosh', () => {
     const dave = { name: 'Dave', age: 22, hair: 'red' }
     people.put(dave)
     assert.deepEqual(people.get({ hair: 'red' }), dave)
+    assert.deepEqual(people.get({ age: 22 }), dave)
   })
 
   it("deletes from all indices", () => {
@@ -67,8 +80,17 @@ describe('Gosh', () => {
     assert.deepEqual(people.get({ age: 22 }), null)
   })
 
+  it("allows a custom index of an existing property using a function", () => {
+    const People = buildStore(withIndexOn('name', name => name.downcase))
+    const people = new People()
+    const dave = { name: 'Dave' }
+    people.put(dave)
+    assert.deepEqual(people.get({ name: 'dave' }), dave)
+    assert.deepEqual(people.get({ name: 'DAVE' }), dave)
+  })
+
   it("allows a multi-property index")
-  it("allows a custom index using a function")
+
   it("refuses to store objects that don't have an indexed property")
   it("refuses to get by an index that doesn't exist")
 })
