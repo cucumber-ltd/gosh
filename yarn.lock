@@ -187,6 +187,10 @@ supports-color@3.1.2:
   dependencies:
     has-flag "^1.0.0"
 
+value-object@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/value-object/-/value-object-0.0.9.tgz#a112be738b6e1a0dc918c69b13c8850905963ce0"
+
 wrappy@1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/wrappy/-/wrappy-1.0.2.tgz#b5243d8f3ec1aa35f1364605bc0d1036e30ab69f"
