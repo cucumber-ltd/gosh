@@ -81,7 +81,7 @@ describe('Gosh', () => {
   })
 
   it("allows a custom index of an existing property using a function", () => {
-    const People = store().withUniqueIndex('name', name => name.downcase)
+    const People = store().withUniqueIndex('name', ({ name }) => name.downcase)
     const people = new People()
     const dave = { name: 'Dave' }
     people.put(dave)
