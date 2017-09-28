@@ -14,6 +14,16 @@ describe('Gosh', () => {
     assert.equal(actual, dave)
   })
 
+  it('overwrites an existing value on a unique index', () => {
+    const People = store().withUniqueIndex('id')
+    const people = new People()
+    people.put({ id: 1, name: 'Dave' })
+    people.put({ id: 2, name: 'Shirley' })
+    people.put({ id: 1, name: 'David' })
+    const actual = people.get({ id: 1 })
+    assert.deepEqual(actual, { id: 1, name: 'David' })
+  })
+
   it('matches exact values only, by default', () => {
     const People = store().withUniqueIndex('name')
     const people = new People()
@@ -24,7 +34,13 @@ describe('Gosh', () => {
     assert.equal(people.get({ name: 'dave' }), null)
   })
 
-  it('throws an error when you try to query by an index that doesn\'t exist')
+  it('throws an error when you try to query by an index that doesn\'t exist', () => {
+    const People = store().withUniqueIndex('name')
+    const people = new People()
+    const dave = { name: 'Dave' }
+    people.put(dave)
+    assert.throws(() => people.get({ age: 22 }), /No unique index matches/)
+  })
 
   it("deletes items", () => {
     const People = store().withUniqueIndex('age')
@@ -89,8 +105,8 @@ describe('Gosh', () => {
     assert.deepEqual(people.get({ name: 'DAVE' }), dave)
   })
 
-  it("groups by a property", () => {
-    const People = store().withUniqueIndex('name').groupBy('age')
+  it("returns collections, grouped by a property", () => {
+    const People = store().withUniqueIndex('name').withCollectionIndex('age')
     const people = new People()
     const dave = { name: 'Dave', age: 22 }
     const barry = { name: 'Barry', age: 19 }
@@ -98,11 +114,13 @@ describe('Gosh', () => {
     people.put(dave)
     people.put(barry)
     people.put(sally)
-    assert.deepEqual(people.getAll({ age: 22 }), new Set([dave, sally]))
+    assert.deepEqual(people.getAll({ age: 22 }), [dave, sally])
   })
 
   it("groups by a custom property, using a function", () => {
-    const People = store().withUniqueIndex('name').groupBy('numberOfKids', ({ kidsAges }) => kidsAges.length)
+    const People = store()
+      .withUniqueIndex('name')
+      .withCollectionIndex('numberOfKids', ({ kidsAges }) => kidsAges.length)
     const people = new People()
     const dave = { name: 'Dave', kidsAges: [6,10,11]}
     const barry = { name: 'Barry', kidsAges: []  }
@@ -110,11 +128,10 @@ describe('Gosh', () => {
     people.put(dave)
     people.put(barry)
     people.put(sally)
-    assert.deepEqual(people.getAll({ numberOfKids: 3 }), new Set([dave, sally]))
+    assert.deepEqual(people.getAll({ numberOfKids: 3 }), [dave, sally])
   })
 
-  it("allows a multi-property index")
+  it("allows a multi-property unique index")
 
   it("refuses to store objects that don't have an indexed property")
-  it("refuses to get by an index that doesn't exist")
 })
