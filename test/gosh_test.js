@@ -133,5 +133,13 @@ describe('Gosh', () => {
 
   it("allows a multi-property unique index")
 
-  it("refuses to store objects that don't have an indexed property")
+  xit("refuses to store objects that don't have an indexed property", () => {
+    const People = store().withUniqueIndex('age')
+    const people = new People()
+    const dave = { name: 'Dave' }
+    assert.throws(
+      () => people.put(dave),
+      /Cannot index the document: /
+    )
+  })
 })
