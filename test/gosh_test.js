@@ -73,6 +73,14 @@ describe('Gosh', () => {
       assert.equal(people.get({ age: 22 }), null) // TODO: use maybe
     })
 
+    it("ignores you if you try to delete an item that doesn't exist", () => {
+      const People = store().withUniqueIndex('age')
+      const people = new People()
+      const dave = { name: 'Dave', age: 22 }
+      people.put(dave)
+      people.delete({ age: 99 })
+    })
+
     it("allows multiple unique indices", () => {
       const People = store().withUniqueIndex('age').withUniqueIndex('hair')
       const people = new People()
