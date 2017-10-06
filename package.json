@@ -9,6 +9,7 @@
     "mocha": "^3.5.3"
   },
   "dependencies": {
+    "monet": "^0.8.10",
     "value-object": "^0.0.9"
   }
 }

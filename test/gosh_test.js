@@ -10,7 +10,7 @@ describe('Gosh', () => {
     const people = new People()
     const dave = { name: 'Dave', age: 22 }
     people.put(dave)
-    const actual = people.get({ age: 22 })
+    const actual = people.get({ age: 22 }).just()
     assert.equal(actual, dave)
   })
 
@@ -32,8 +32,8 @@ describe('Gosh', () => {
       const people = new People()
       const dave = { name: 'Dave' }
       people.put(dave)
-      assert.deepEqual(people.get({ name: 'dave' }), dave)
-      assert.deepEqual(people.get({ name: 'DAVE' }), dave)
+      assert.deepEqual(people.get({ name: 'dave' }).just(), dave)
+      assert.deepEqual(people.get({ name: 'DAVE' }).just(), dave)
     })
 
     it('overwrites an existing value on a unique index', () => {
@@ -42,7 +42,7 @@ describe('Gosh', () => {
       people.put({ id: 1, name: 'Dave' })
       people.put({ id: 2, name: 'Shirley' })
       people.put({ id: 1, name: 'David' })
-      const actual = people.get({ id: 1 })
+      const actual = people.get({ id: 1 }).just()
       assert.deepEqual(actual, { id: 1, name: 'David' })
     })
 
@@ -51,9 +51,9 @@ describe('Gosh', () => {
       const people = new People()
       const dave = { name: 'Dave' }
       people.put(dave)
-      assert.equal(people.get({ name: 'Dave' }), dave)
-      assert.equal(people.get({ name: 'DAVE' }), null)
-      assert.equal(people.get({ name: 'dave' }), null)
+      assert.equal(people.get({ name: 'Dave' }).just(), dave)
+      assert(people.get({ name: 'DAVE' }).isNone())
+      assert(people.get({ name: 'dave' }).isNone())
     })
 
     it('throws an error when you try to query by an index that doesn\'t exist', () => {
@@ -70,7 +70,7 @@ describe('Gosh', () => {
       const dave = { name: 'Dave', age: 22 }
       people.put(dave)
       people.delete({ age: 22 })
-      assert.equal(people.get({ age: 22 }), null) // TODO: use maybe
+      assert(people.get({ age: 22 }).isNone())
     })
 
     it("ignores you if you try to delete an item that doesn't exist", () => {
@@ -86,8 +86,8 @@ describe('Gosh', () => {
       const people = new People()
       const dave = { name: 'Dave', age: 22, hair: 'red' }
       people.put(dave)
-      assert.deepEqual(people.get({ hair: 'red' }), dave)
-      assert.deepEqual(people.get({ age: 22 }), dave)
+      assert.deepEqual(people.get({ hair: 'red' }).just(), dave)
+      assert.deepEqual(people.get({ age: 22 }).just(), dave)
     })
 
     it("deletes from all unique indices", () => {
@@ -96,8 +96,8 @@ describe('Gosh', () => {
       const dave = { name: 'Dave', age: 22, hair: 'red' }
       people.put(dave)
       people.delete({ hair: 'red' })
-      assert.deepEqual(people.get({ hair: 'red' }), null)
-      assert.deepEqual(people.get({ age: 22 }), null)
+      assert(people.get({ hair: 'red' }).isNone())
+      assert(people.get({ age: 22 }).isNone())
     })
 
   })
@@ -147,7 +147,7 @@ describe('Gosh', () => {
     const otherPeople = new People()
     const dave = { name: 'Dave', age: 22 }
     people.put(dave)
-    assert.equal(otherPeople.get({ age: 22}), null)
+    assert(otherPeople.get({ age: 22}).isNone())
   })
 
   it("lets you check whether a value exists in the store", () => {
