@@ -46,6 +46,15 @@ describe('MemoryIndex', () => {
     assert.deepEqual(actual, [])
   })
 
+  it('handles a delete on an empty index', () => {
+    const dave = { name: 'dave', uid: '1234' }
+    const nameIndex = new MemoryIndex({
+      makeKey: document => document.name,
+      makeId: document => document.uid,
+    })
+    nameIndex.delete(dave)
+  })
+
   it('refuses to store a document that produces a non-string key', () => {
     const dave = { name: 'dave', age: 30, uid: '1234' }
     const ageIndex = new MemoryIndex({
