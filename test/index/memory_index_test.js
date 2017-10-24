@@ -21,7 +21,7 @@ describe('MemoryIndex', () => {
   it('stores and retrieves the ID of multiple documents', () => {
     const dave = { name: 'dave', age: '30', uid: '1234' }
     const sally = { name: 'sally', age: '30', uid: '4567' }
-    const barry = { name: 'sally', age: '40', uid: '7890' }
+    const barry = { name: 'barry', age: '40', uid: '7890' }
     const ageIndex = new MemoryIndex({
       makeKey: document => document.age,
       makeId: document => document.uid,
@@ -32,6 +32,22 @@ describe('MemoryIndex', () => {
       .put(barry)
       .getIds({ age: '30' })
     assert.deepEqual(actual, [dave.uid, sally.uid])
+  })
+
+  it('reindexes an existing document when the IDs match', () => {
+    const dave = { name: 'dave', age: '30', uid: '1234' }
+    const sally = { name: 'sally', age: '30', uid: '4567' }
+    const sallyUpdate = { name: 'sally', age: '40', uid: '4567' }
+    const ageIndex = new MemoryIndex({
+      makeKey: document => document.age,
+      makeId: document => document.uid,
+    })
+    ageIndex
+      .put(dave)
+      .put(sally)
+      .put(sallyUpdate)
+    assert.deepEqual(ageIndex.getIds({ age: '40' }), [sally.uid])
+    assert.deepEqual(ageIndex.getIds({ age: '30' }), [dave.uid])
   })
 
   it('deletes the ID of a single document', () => {
