@@ -32,15 +32,6 @@ describe('MemoryIndex', () => {
     assert.deepEqual(actual, [dave.uid, sally.uid])
   })
 
-  it("gives an error if asked to store a document that produces a key that's not a string", () => {
-    const dave = { name: 'dave', age: 30, uid: '1234' }
-    const ageIndex = new MemoryIndex({
-      makeKey: document => document.age,
-      makeId: document => document.uid,
-    })
-    assert.throws(() => ageIndex.put(dave), /must be a string/i)
-  })
-
   it('deletes the ID of a single document', () => {
     const dave = { name: 'dave', uid: '1234' }
     const sally = { name: 'sally', uid: '4567' }
@@ -53,5 +44,23 @@ describe('MemoryIndex', () => {
     nameIndex.delete(dave)
     const actual = nameIndex.getIds({ name: 'dave' })
     assert.deepEqual(actual, [])
+  })
+
+  it('refuses to store a document that produces a non-string key', () => {
+    const dave = { name: 'dave', age: 30, uid: '1234' }
+    const ageIndex = new MemoryIndex({
+      makeKey: document => document.age,
+      makeId: document => document.uid,
+    })
+    assert.throws(() => ageIndex.put(dave), /must be a string/i)
+  })
+
+  it("refuses to store a document that can't be indexed", () => {
+    const who = { uid: '4567' }
+    const nameIndex = new MemoryIndex({
+      makeKey: document => document.name,
+      makeId: document => document.uid,
+    })
+    assert.throws(() => nameIndex.put(who), /cannot be null/i)
   })
 })
