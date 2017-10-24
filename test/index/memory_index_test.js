@@ -75,4 +75,22 @@ describe('MemoryIndex', () => {
     })
     assert.throws(() => nameIndex.put(who), /cannot be null/i)
   })
+
+  it('refuses to store a document without an ID', () => {
+    const dave = { name: 'Dave' }
+    const nameIndex = new MemoryIndex({
+      makeKey: document => document.name,
+      makeId: document => document.uid,
+    })
+    assert.throws(() => nameIndex.put(dave), /cannot be null/i)
+  })
+
+  it('refuses to store a document without a string ID', () => {
+    const dave = { name: 'Dave', uid: { ni: 'JC721312X' } }
+    const nameIndex = new MemoryIndex({
+      makeKey: document => document.name,
+      makeId: document => document.uid,
+    })
+    assert.throws(() => nameIndex.put(dave), /must be a string/i)
+  })
 })
