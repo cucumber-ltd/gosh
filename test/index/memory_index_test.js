@@ -11,9 +11,10 @@ describe('MemoryIndex', () => {
       makeKey: document => document.name,
       makeId: document => document.uid,
     })
-    nameIndex.put(dave)
-    nameIndex.put(sally)
-    const actual = nameIndex.getIds({ name: 'dave' })
+    const actual = nameIndex
+      .put(dave)
+      .put(sally)
+      .getIds({ name: 'dave' })
     assert.deepEqual(actual, [dave.uid])
   })
 
@@ -25,10 +26,11 @@ describe('MemoryIndex', () => {
       makeKey: document => document.age,
       makeId: document => document.uid,
     })
-    ageIndex.put(dave)
-    ageIndex.put(sally)
-    ageIndex.put(barry)
-    const actual = ageIndex.getIds({ age: '30' })
+    const actual = ageIndex
+      .put(dave)
+      .put(sally)
+      .put(barry)
+      .getIds({ age: '30' })
     assert.deepEqual(actual, [dave.uid, sally.uid])
   })
 
@@ -39,10 +41,11 @@ describe('MemoryIndex', () => {
       makeKey: document => document.name,
       makeId: document => document.uid,
     })
-    nameIndex.put(dave)
-    nameIndex.put(sally)
-    nameIndex.delete(dave)
-    const actual = nameIndex.getIds({ name: 'dave' })
+    const actual = nameIndex
+      .put(dave)
+      .put(sally)
+      .delete(dave)
+      .getIds({ name: 'dave' })
     assert.deepEqual(actual, [])
   })
 
