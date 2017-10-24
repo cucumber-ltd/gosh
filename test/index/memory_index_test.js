@@ -42,4 +42,19 @@ describe('MemoryIndex', () => {
     })
     assert.throws(() => ageIndex.put(dave), /must be a string/i)
   })
+  
+  it('deletes the ID of a single document', () => {
+    const dave = { name: 'dave', uid: '1234' }
+    const sally = { name: 'sally', uid: '4567'}
+    const documents = [dave, sally]
+    const nameIndex = new MemoryIndex({ 
+      makeKey: (document) => document.name, 
+      makeId: (document) => document.uid
+    })
+    nameIndex.put(dave)
+    nameIndex.put(sally)
+    nameIndex.delete(dave)
+    const actual = nameIndex.getIds({ name: 'dave' })
+    assert.deepEqual(actual, [])
+  })
 })
