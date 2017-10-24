@@ -35,9 +35,9 @@ describe('MemoryIndex', () => {
   })
 
   it('reindexes an existing document when the IDs match', () => {
-    const dave = { name: 'dave', age: '30', uid: '1234' }
-    const sally = { name: 'sally', age: '30', uid: '4567' }
-    const sallyUpdate = { name: 'sally', age: '40', uid: '4567' }
+    const dave = { name: 'dave', age: '30', uid: 'dave-id' }
+    const sally = { name: 'sally', age: '30', uid: 'sally-id' }
+    const sallyUpdate = { name: 'sally', age: '40', uid: 'sally-id' }
     const ageIndex = new MemoryIndex({
       makeKey: document => document.age,
       makeId: document => document.uid,
