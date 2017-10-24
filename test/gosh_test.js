@@ -4,7 +4,6 @@ const assert = require('assert')
 const store = require('../lib/gosh')
 
 describe('Gosh', () => {
-
   it('lets you build a store and find things by a unique index', () => {
     const People = store().withUniqueIndex('age')
     const people = new People()
@@ -14,8 +13,10 @@ describe('Gosh', () => {
     assert.equal(actual, dave)
   })
 
-  it("returns collections, grouped by a property", () => {
-    const People = store().withUniqueIndex('name').withCollectionIndex('age')
+  it('returns collections, grouped by a property', () => {
+    const People = store()
+      .withUniqueIndex('name')
+      .withCollectionIndex('age')
     const people = new People()
     const dave = { name: 'Dave', age: 22 }
     const barry = { name: 'Barry', age: 19 }
@@ -26,9 +27,12 @@ describe('Gosh', () => {
     assert.deepEqual(people.getAll({ age: 22 }), [dave, sally])
   })
 
-  describe("using a unique index", () => {
-    it("allows a custom index of an existing property using a function", () => {
-      const People = store().withUniqueIndex('name', ({ name }) => name.downcase)
+  describe('using a unique index', () => {
+    it('allows a custom index of an existing property using a function', () => {
+      const People = store().withUniqueIndex(
+        'name',
+        ({ name }) => name.downcase
+      )
       const people = new People()
       const dave = { name: 'Dave' }
       people.put(dave)
@@ -56,7 +60,7 @@ describe('Gosh', () => {
       assert(people.get({ name: 'dave' }).isNone())
     })
 
-    it('throws an error when you try to query by an index that doesn\'t exist', () => {
+    it("throws an error when you try to query by an index that doesn't exist", () => {
       const People = store().withUniqueIndex('name')
       const people = new People()
       const dave = { name: 'Dave' }
@@ -64,7 +68,7 @@ describe('Gosh', () => {
       assert.throws(() => people.get({ age: 22 }), /No unique index matches/)
     })
 
-    it("deletes items from a unique index", () => {
+    it('deletes items from a unique index', () => {
       const People = store().withUniqueIndex('age')
       const people = new People()
       const dave = { name: 'Dave', age: 22 }
@@ -81,8 +85,10 @@ describe('Gosh', () => {
       people.delete({ age: 99 })
     })
 
-    it("allows multiple unique indices", () => {
-      const People = store().withUniqueIndex('age').withUniqueIndex('hair')
+    it('allows multiple unique indices', () => {
+      const People = store()
+        .withUniqueIndex('age')
+        .withUniqueIndex('hair')
       const people = new People()
       const dave = { name: 'Dave', age: 22, hair: 'red' }
       people.put(dave)
@@ -90,8 +96,10 @@ describe('Gosh', () => {
       assert.deepEqual(people.get({ age: 22 }).just(), dave)
     })
 
-    it("deletes from all unique indices", () => {
-      const People = store().withUniqueIndex('age').withUniqueIndex('hair')
+    it('deletes from all unique indices', () => {
+      const People = store()
+        .withUniqueIndex('age')
+        .withUniqueIndex('hair')
       const people = new People()
       const dave = { name: 'Dave', age: 22, hair: 'red' }
       people.put(dave)
@@ -99,26 +107,27 @@ describe('Gosh', () => {
       assert(people.get({ hair: 'red' }).isNone())
       assert(people.get({ age: 22 }).isNone())
     })
-
   })
 
-  context("indexing collections", () => {
-    it("groups by a custom property, using a function", () => {
+  context('indexing collections', () => {
+    it('groups by a custom property, using a function', () => {
       const People = store()
         .withUniqueIndex('name')
         .withCollectionIndex('numberOfKids', ({ kidsAges }) => kidsAges.length)
       const people = new People()
-      const dave = { name: 'Dave', kidsAges: [6,10,11]}
-      const barry = { name: 'Barry', kidsAges: []  }
-      const sally = { name: 'Sally', kidsAges: [1,2,11]}
+      const dave = { name: 'Dave', kidsAges: [6, 10, 11] }
+      const barry = { name: 'Barry', kidsAges: [] }
+      const sally = { name: 'Sally', kidsAges: [1, 2, 11] }
       people.put(dave)
       people.put(barry)
       people.put(sally)
       assert.deepEqual(people.getAll({ numberOfKids: 3 }), [dave, sally])
     })
 
-    it("deletes items from a collection index (as long as you delete by a unique key)", () => {
-      const People = store().withUniqueIndex('name').withCollectionIndex('age')
+    it('deletes items from a collection index (as long as you delete by a unique key)', () => {
+      const People = store()
+        .withUniqueIndex('name')
+        .withCollectionIndex('age')
       const people = new People()
       const dave = { name: 'Dave', age: 22 }
       const sally = { name: 'Sally', age: 22 }
@@ -129,15 +138,12 @@ describe('Gosh', () => {
       assert.deepEqual(people.getAll({ age: 22 }), [sally])
     })
 
-    it("refuses to delete by a collection key", () => {
-      const People = store().withUniqueIndex('name').withCollectionIndex('age')
+    it('refuses to delete by a collection key', () => {
+      const People = store()
+        .withUniqueIndex('name')
+        .withCollectionIndex('age')
       const people = new People()
-      const dave = { name: 'Dave', age: 22 }
-      const sally = { name: 'Sally', age: 22 }
-      assert.throws(
-        () => people.delete({ age: 22 }),
-        /No unique index matches/
-      )
+      assert.throws(() => people.delete({ age: 22 }), /No unique index matches/)
     })
   })
 
@@ -147,23 +153,22 @@ describe('Gosh', () => {
     const otherPeople = new People()
     const dave = { name: 'Dave', age: 22 }
     people.put(dave)
-    assert(otherPeople.get({ age: 22}).isNone())
+    assert(otherPeople.get({ age: 22 }).isNone())
   })
 
-  it("lets you check whether a value exists in the store", () => {
+  it('lets you check whether a value exists in the store', () => {
     const People = store().withUniqueIndex('age')
     const people = new People()
     const dave = { name: 'Dave', age: 22 }
     people.put(dave)
-    assert(people.has({ age: 22}))
+    assert(people.has({ age: 22 }))
   })
 
-  it("returns all values", () => {
+  it('returns all values', () => {
     const People = store().withUniqueIndex('age')
     const people = new People()
     const dave = { name: 'Dave', age: 22 }
     people.put(dave)
     assert.deepEqual(Array.from(people.values()), [dave])
   })
-
 })

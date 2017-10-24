@@ -1,12 +1,17 @@
 {
   "name": "gosh",
   "version": "1.0.0",
-  "description": "Glorious Object Storage Hole",
+  "description": "Glorious Object Storage Home",
   "main": "lib/gosh.js",
   "author": "Matt Wynne",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "^3.5.3"
+    "eslint-config-prettier": "^2.6.0",
+    "eslint-plugin-mocha": "^4.11.0",
+    "eslint-plugin-prettier": "^2.3.1",
+    "mocha": "^3.5.3",
+    "prettier": "^1.7.4",
+    "eslint": "^4.9.0"
   },
   "dependencies": {
     "monet": "^0.8.10",
