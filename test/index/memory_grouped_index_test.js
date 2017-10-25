@@ -1,13 +1,13 @@
 'use strict'
 
 const assert = require('assert')
-const MemoryIndex = require('../../lib/index/memory_index')
+const MemoryGroupedIndex = require('../../lib/index/memory_index')
 
-describe('MemoryIndex', () => {
+describe('MemoryGroupedIndex', () => {
   it('stores and retrieves the ID of a single document', () => {
     const dave = { name: 'dave', uid: '1234' }
     const sally = { name: 'sally', uid: '4567' }
-    const nameIndex = new MemoryIndex({
+    const nameIndex = new MemoryGroupedIndex({
       makeKey: document => document.name,
       makeId: document => document.uid,
     })
@@ -22,7 +22,7 @@ describe('MemoryIndex', () => {
     const dave = { name: 'dave', age: '30', uid: '1234' }
     const sally = { name: 'sally', age: '30', uid: '4567' }
     const barry = { name: 'barry', age: '40', uid: '7890' }
-    const ageIndex = new MemoryIndex({
+    const ageIndex = new MemoryGroupedIndex({
       makeKey: document => document.age,
       makeId: document => document.uid,
     })
@@ -38,7 +38,7 @@ describe('MemoryIndex', () => {
     const dave = { name: 'dave', age: '30', uid: 'dave-id' }
     const sally = { name: 'sally', age: '30', uid: 'sally-id' }
     const sallyUpdate = { name: 'sally', age: '40', uid: 'sally-id' }
-    const ageIndex = new MemoryIndex({
+    const ageIndex = new MemoryGroupedIndex({
       makeKey: document => document.age,
       makeId: document => document.uid,
     })
@@ -53,7 +53,7 @@ describe('MemoryIndex', () => {
   it('deletes the ID of a single document', () => {
     const dave = { name: 'dave', uid: '1234' }
     const sally = { name: 'sally', uid: '4567' }
-    const nameIndex = new MemoryIndex({
+    const nameIndex = new MemoryGroupedIndex({
       makeKey: document => document.name,
       makeId: document => document.uid,
     })
@@ -67,7 +67,7 @@ describe('MemoryIndex', () => {
 
   it('handles a delete on an empty index', () => {
     const dave = { name: 'dave', uid: '1234' }
-    const nameIndex = new MemoryIndex({
+    const nameIndex = new MemoryGroupedIndex({
       makeKey: document => document.name,
       makeId: document => document.uid,
     })
@@ -76,7 +76,7 @@ describe('MemoryIndex', () => {
 
   it('refuses to store a document that produces a non-string key', () => {
     const dave = { name: 'dave', age: 30, uid: '1234' }
-    const ageIndex = new MemoryIndex({
+    const ageIndex = new MemoryGroupedIndex({
       makeKey: document => document.age,
       makeId: document => document.uid,
     })
@@ -85,7 +85,7 @@ describe('MemoryIndex', () => {
 
   it("refuses to store a document that can't be indexed", () => {
     const who = { uid: '4567' }
-    const nameIndex = new MemoryIndex({
+    const nameIndex = new MemoryGroupedIndex({
       makeKey: document => document.name,
       makeId: document => document.uid,
     })
@@ -94,7 +94,7 @@ describe('MemoryIndex', () => {
 
   it('refuses to store a document without an ID', () => {
     const dave = { name: 'Dave' }
-    const nameIndex = new MemoryIndex({
+    const nameIndex = new MemoryGroupedIndex({
       makeKey: document => document.name,
       makeId: document => document.uid,
     })
@@ -103,7 +103,7 @@ describe('MemoryIndex', () => {
 
   it('refuses to store a document without a string ID', () => {
     const dave = { name: 'Dave', uid: { ni: 'JC721312X' } }
-    const nameIndex = new MemoryIndex({
+    const nameIndex = new MemoryGroupedIndex({
       makeKey: document => document.name,
       makeId: document => document.uid,
     })
@@ -112,7 +112,7 @@ describe('MemoryIndex', () => {
 
   it('refuses to get a document by a bogus query', () => {
     const dave = { name: 'Dave', uid: '1234' }
-    const nameIndex = new MemoryIndex({
+    const nameIndex = new MemoryGroupedIndex({
       makeKey: document => document.name,
       makeId: document => document.uid,
     })
