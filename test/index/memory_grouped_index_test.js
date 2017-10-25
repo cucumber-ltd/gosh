@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const MemoryGroupedIndex = require('../../lib/index/memory_index')
+const MemoryGroupedIndex = require('../../lib/index/memory_grouped_index')
 
 describe('MemoryGroupedIndex', () => {
   it('stores and retrieves the ID of a single document', () => {

@@ -30,8 +30,9 @@ describe('MemoryUniqueIndex', () => {
       .put(dave)
       .put(sally)
       .put(sallyUpdate)
-    assert.deepEqual(ageIndex.getId({ age: '35' }), sally.uid)
+    assert.deepEqual(ageIndex.getId({ age: '40' }), sally.uid)
     assert.deepEqual(ageIndex.getId({ age: '30' }), dave.uid)
+    assert.deepEqual(ageIndex.getId({ age: '35' }), null)
   })
 
   it('deletes the ID of a single document', () => {
