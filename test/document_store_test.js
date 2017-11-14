@@ -19,20 +19,18 @@ describe('DocumentStore', () => {
   context('with a single unique index', () => {
     it('finds a single document', () => {
       const dave = { name: 'Dave', uid: '1234' }
-      const indices = [
-        new MemoryUniqueIndex({ makeKey: document => document.name, makeId }),
-      ]
-      const store = new DocumentStore({ indices, makeId }).put(dave)
+      const store = new DocumentStore({ makeId })
+        .withUniqueIndex(document => document.name)
+        .put(dave)
       const actual = store.find({ name: 'Dave' })
       assert.deepEqual(actual, dave)
     })
 
     it('returns null when no result is found', () => {
       const dave = { name: 'Dave', uid: '1234' }
-      const indices = [
-        new MemoryUniqueIndex({ makeKey: document => document.name, makeId }),
-      ]
-      const store = new DocumentStore({ indices, makeId }).put(dave)
+      const store = new DocumentStore({ makeId })
+        .withUniqueIndex(document => document.name)
+        .put(dave)
       const actual = store.find({ name: 'David' })
       assert.deepEqual(actual, null)
     })
@@ -40,10 +38,8 @@ describe('DocumentStore', () => {
     it('updates a document with the same ID', () => {
       const dave = { name: 'Dave', uid: '1234' }
       const updatedDave = { name: 'David', uid: '1234' }
-      const indices = [
-        new MemoryUniqueIndex({ makeKey: document => document.name, makeId }),
-      ]
-      const store = new DocumentStore({ indices, makeId })
+      const store = new DocumentStore({ makeId })
+        .withUniqueIndex(document => document.name)
         .put(dave)
         .put(updatedDave)
       const actual = store.find({ name: 'David' })
@@ -52,10 +48,9 @@ describe('DocumentStore', () => {
     })
 
     it('returns null for an invalid query', () => {
-      const indices = [
-        new MemoryUniqueIndex({ makeKey: document => document.name, makeId }),
-      ]
-      const store = new DocumentStore({ indices, makeId })
+      const store = new DocumentStore({ makeId }).withUniqueIndex(
+        document => document.name
+      )
       assert.equal(store.find({ age: '30' }), null)
     })
   })
