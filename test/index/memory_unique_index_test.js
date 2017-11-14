@@ -104,4 +104,34 @@ describe('MemoryUniqueIndex', () => {
     nameIndex.put(dave)
     assert.throws(() => nameIndex.getId({ age: 30 }), /Key cannot be null/)
   })
+
+  describe('getIds', () => {
+    it('returns the matching ID in an array', () => {
+      const dave = { name: 'Dave', uid: '1234' }
+      const index = new MemoryUniqueIndex({
+        makeKey: document => document.name,
+        makeId: document => document.uid,
+      })
+      index.put(dave)
+      assert.deepEqual(index.getIds({ name: 'Dave' }), [dave.uid])
+    })
+    it('returns an empty array when nothing matches the query', () => {
+      const dave = { name: 'Dave', uid: '1234' }
+      const index = new MemoryUniqueIndex({
+        makeKey: document => document.name,
+        makeId: document => document.uid,
+      })
+      index.put(dave)
+      assert.deepEqual(index.getIds({ age: 30 }), [])
+    })
+    it('returns an empty array when a key cannot be made from the query', () => {
+      const dave = { name: 'Dave', uid: '1234' }
+      const index = new MemoryUniqueIndex({
+        makeKey: document => document.name.length.toString(),
+        makeId: document => document.uid,
+      })
+      index.put(dave)
+      assert.deepEqual(index.getIds({ age: 30 }), [])
+    })
+  })
 })
