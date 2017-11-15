@@ -56,7 +56,7 @@ describe('DocumentStore', () => {
   })
 
   context('with a single grouped index', () => {
-    it('finds all documents matching a query', () => {
+    it('#all finds all documents matching a query', () => {
       const dave = { name: 'Dave', hair: 'red' }
       const dan = { name: 'Dan', hair: 'red' }
       const susan = { name: 'Susan', hair: 'grey' }
@@ -70,7 +70,7 @@ describe('DocumentStore', () => {
       assert.deepEqual(actual, [dave, dan])
     })
 
-    it('finds no documents when none match the query', () => {
+    it('#all finds no documents when none match the query', () => {
       const susan = { name: 'Susan', hair: 'grey' }
       const makeId = document => document.name
       const store = new DocumentStore({ makeId })
@@ -78,6 +78,20 @@ describe('DocumentStore', () => {
         .put(susan)
       const actual = store.all({ hair: 'blue' })
       assert.deepEqual(actual, [])
+    })
+
+    it('#find throws an error if you find more than one thing', () => {
+      const dave = { name: 'Dave', hair: 'red' }
+      const dan = { name: 'Dan', hair: 'red' }
+      const makeId = document => document.name
+      const store = new DocumentStore({ makeId })
+        .withGroupedIndex(document => document.hair)
+        .put(dave)
+        .put(dan)
+      assert.throws(
+        () => store.find({ hair: 'red' }),
+        /Only expected to get one result but got 2/
+      )
     })
   })
 
