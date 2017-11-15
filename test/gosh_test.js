@@ -13,4 +13,18 @@ describe('Gosh', () => {
     const actual = store.find({ age: 22 })
     assert.equal(actual, dave)
   })
+
+  it('lets you build a store and find things by a grouped index', () => {
+    const dave = { name: 'Dave', hair: 'red' }
+    const dan = { name: 'Dan', hair: 'red' }
+    const susan = { name: 'Susan', hair: 'grey' }
+    const makeId = document => document.name
+    const store = new DocumentStore({ makeId })
+      .withGroupedIndex(document => document.hair)
+      .put(dave)
+      .put(dan)
+      .put(susan)
+    const actual = store.all({ hair: 'red' })
+    assert.deepEqual(actual, [dave, dan])
+  })
 })

@@ -56,7 +56,29 @@ describe('DocumentStore', () => {
   })
 
   context('with a single grouped index', () => {
-    it('finds all documents matching a query')
+    it('finds all documents matching a query', () => {
+      const dave = { name: 'Dave', hair: 'red' }
+      const dan = { name: 'Dan', hair: 'red' }
+      const susan = { name: 'Susan', hair: 'grey' }
+      const makeId = document => document.name
+      const store = new DocumentStore({ makeId })
+        .withGroupedIndex(document => document.hair)
+        .put(dave)
+        .put(dan)
+        .put(susan)
+      const actual = store.all({ hair: 'red' })
+      assert.deepEqual(actual, [dave, dan])
+    })
+
+    it('finds no documents when none match the query', () => {
+      const susan = { name: 'Susan', hair: 'grey' }
+      const makeId = document => document.name
+      const store = new DocumentStore({ makeId })
+        .withGroupedIndex(document => document.hair)
+        .put(susan)
+      const actual = store.all({ hair: 'blue' })
+      assert.deepEqual(actual, [])
+    })
   })
 
   describe('deleting documents', () => {

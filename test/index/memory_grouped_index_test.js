@@ -109,14 +109,4 @@ describe('MemoryGroupedIndex', () => {
     })
     assert.throws(() => nameIndex.put(dave), /must be a string/i)
   })
-
-  it('refuses to get a document by a bogus query', () => {
-    const dave = { name: 'Dave', uid: '1234' }
-    const nameIndex = new MemoryGroupedIndex({
-      makeKey: document => document.name,
-      makeId: document => document.uid,
-    })
-    nameIndex.put(dave)
-    assert.throws(() => nameIndex.getIds({ age: 30 }), /Key cannot be null/)
-  })
 })
