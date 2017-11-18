@@ -60,7 +60,7 @@ describe('MemoryGroupedIndex', () => {
     const actual = nameIndex
       .put(dave)
       .put(sally)
-      .delete(dave)
+      .deleteId(dave.uid)
       .getIds({ name: 'dave' })
     assert.deepEqual(actual, [])
   })
@@ -71,7 +71,7 @@ describe('MemoryGroupedIndex', () => {
       makeKey: document => document.name,
       makeId: document => document.uid,
     })
-    nameIndex.delete(dave)
+    nameIndex.deleteId(dave.uid)
   })
 
   it('refuses to store a document that produces a non-string key', () => {
