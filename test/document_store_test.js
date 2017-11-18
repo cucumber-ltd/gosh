@@ -82,6 +82,18 @@ describe('DocumentStore', () => {
       assert.deepEqual(actual, [dave, dan])
     })
 
+    it('#all works with non-string properties', () => {
+      const dave = { name: 'Dave', public: true }
+      const dan = { name: 'Dan', public: false }
+      const makeId = document => document.name
+      const store = new DocumentStore({ makeId })
+        .withGroupedIndex(document => document.public.toString())
+        .put(dave)
+        .put(dan)
+      const actual = store.all({ public: true })
+      assert.deepEqual(actual, [dave])
+    })
+
     it('#all finds no documents when none match the query', () => {
       const susan = { name: 'Susan', hair: 'grey' }
       const makeId = document => document.name
