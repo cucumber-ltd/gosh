@@ -53,6 +53,18 @@ describe('DocumentStore', () => {
       )
       assert.equal(store.find({ age: '30' }), null)
     })
+
+    it('allows an extra optional unique index', () => {
+      const dave = { name: 'Dave', age: 30, uid: '1234' }
+      const sally = { name: 'Sally', uid: '4567' }
+      const store = new DocumentStore({ makeId })
+        .withUniqueIndex(document => document.name)
+        .withOptionalUniqueIndex(document => document.age)
+        .put(dave)
+        .put(sally)
+      assert.equal(store.find({ age: '30' }), dave)
+      assert.equal(store.find({ name: 'Sally' }), sally)
+    })
   })
 
   context('with a single grouped index', () => {

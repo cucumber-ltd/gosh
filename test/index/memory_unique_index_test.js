@@ -14,8 +14,8 @@ describe('MemoryUniqueIndex', () => {
     const actual = nameIndex
       .put(dave)
       .put(sally)
-      .getId({ name: 'dave' })
-    assert.deepEqual(actual, dave.uid)
+      .getIds({ name: 'dave' })
+    assert.deepEqual(actual, [dave.uid])
   })
 
   it('reindexes an existing document when the IDs match', () => {
@@ -30,9 +30,9 @@ describe('MemoryUniqueIndex', () => {
       .put(dave)
       .put(sally)
       .put(sallyUpdate)
-    assert.deepEqual(ageIndex.getId({ age: '40' }), sally.uid)
-    assert.deepEqual(ageIndex.getId({ age: '30' }), dave.uid)
-    assert.deepEqual(ageIndex.getId({ age: '35' }), null)
+    assert.deepEqual(ageIndex.getIds({ age: '40' }), [sally.uid])
+    assert.deepEqual(ageIndex.getIds({ age: '30' }), [dave.uid])
+    assert.deepEqual(ageIndex.getIds({ age: '35' }), [])
   })
 
   it('deletes the ID of a single document', () => {
@@ -46,8 +46,8 @@ describe('MemoryUniqueIndex', () => {
       .put(dave)
       .put(sally)
       .deleteId(dave.uid)
-      .getId({ name: 'dave' })
-    assert.deepEqual(actual, null)
+      .getIds({ name: 'dave' })
+    assert.deepEqual(actual, [])
   })
 
   it('handles a delete on an empty index', () => {
@@ -95,16 +95,6 @@ describe('MemoryUniqueIndex', () => {
     assert.throws(() => nameIndex.put(dave), /must be a string/i)
   })
 
-  it('refuses to get a document by a bogus query', () => {
-    const dave = { name: 'Dave', uid: '1234' }
-    const nameIndex = new MemoryUniqueIndex({
-      makeKey: document => document.name,
-      makeId: document => document.uid,
-    })
-    nameIndex.put(dave)
-    assert.throws(() => nameIndex.getId({ age: 30 }), /Key cannot be null/)
-  })
-
   describe('getIds', () => {
     it('returns the matching ID in an array', () => {
       const dave = { name: 'Dave', uid: '1234' }
@@ -115,6 +105,7 @@ describe('MemoryUniqueIndex', () => {
       index.put(dave)
       assert.deepEqual(index.getIds({ name: 'Dave' }), [dave.uid])
     })
+
     it('returns an empty array when nothing matches the query', () => {
       const dave = { name: 'Dave', uid: '1234' }
       const index = new MemoryUniqueIndex({
@@ -124,6 +115,7 @@ describe('MemoryUniqueIndex', () => {
       index.put(dave)
       assert.deepEqual(index.getIds({ age: 30 }), [])
     })
+
     it('returns an empty array when a key cannot be made from the query', () => {
       const dave = { name: 'Dave', uid: '1234' }
       const index = new MemoryUniqueIndex({
