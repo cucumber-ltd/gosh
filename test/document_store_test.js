@@ -2,7 +2,7 @@
 
 const assert = require('assert')
 const DocumentStore = require('../lib/document_store')
-const MemoryUniqueIndex = require('../lib/index/memory_unique_index')
+const MemoryUniqueIndex = require('../lib/index/memory/unique_index')
 
 describe('DocumentStore', () => {
   const makeId = document => document.uid

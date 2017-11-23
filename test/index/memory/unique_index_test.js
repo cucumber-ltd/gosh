@@ -1,7 +1,7 @@
 'use strict'
 
 const assert = require('assert')
-const MemoryUniqueIndex = require('../../lib/index/memory_unique_index')
+const MemoryUniqueIndex = require('../../../lib/index/memory/unique_index')
 
 describe('MemoryUniqueIndex', () => {
   it('stores and retrieves the ID of a single document', () => {
