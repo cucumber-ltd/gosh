@@ -16,6 +16,15 @@ describe('DocumentStore', () => {
     })
   })
 
+  it('returns all the values', () => {
+    const dave = { name: 'Dave', uid: '1234' }
+    const store = new DocumentStore({ makeId })
+      .withUniqueIndex(document => document.name)
+      .put(dave)
+    const actual = store.values()
+    assert.deepEqual(actual, [dave])
+  })
+
   context('with a single unique index', () => {
     it('finds a single document', () => {
       const dave = { name: 'Dave', uid: '1234' }
