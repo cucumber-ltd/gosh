@@ -67,14 +67,14 @@ describe('DocumentStore', () => {
     })
   })
 
-  context('with a single grouped index', () => {
+  context('with a single one-to-many index', () => {
     it('#all finds all documents matching a query', () => {
       const dave = { name: 'Dave', hair: 'red' }
       const dan = { name: 'Dan', hair: 'red' }
       const susan = { name: 'Susan', hair: 'grey' }
       const makeId = document => document.name
       const store = new DocumentStore({ makeId })
-        .withGroupedIndex(document => document.hair)
+        .withOneToManyIndex(document => document.hair)
         .put(dave)
         .put(dan)
         .put(susan)
@@ -87,7 +87,7 @@ describe('DocumentStore', () => {
       const dan = { name: 'Dan', public: false }
       const makeId = document => document.name
       const store = new DocumentStore({ makeId })
-        .withGroupedIndex(document => document.public.toString())
+        .withOneToManyIndex(document => document.public.toString())
         .put(dave)
         .put(dan)
       const actual = store.all({ public: true })
@@ -98,7 +98,7 @@ describe('DocumentStore', () => {
       const susan = { name: 'Susan', hair: 'grey' }
       const makeId = document => document.name
       const store = new DocumentStore({ makeId })
-        .withGroupedIndex(document => document.hair)
+        .withOneToManyIndex(document => document.hair)
         .put(susan)
       const actual = store.all({ hair: 'blue' })
       assert.deepEqual(actual, [])
@@ -109,7 +109,7 @@ describe('DocumentStore', () => {
       const dan = { name: 'Dan', hair: 'red' }
       const makeId = document => document.name
       const store = new DocumentStore({ makeId })
-        .withGroupedIndex(document => document.hair)
+        .withOneToManyIndex(document => document.hair)
         .put(dave)
         .put(dan)
       assert.throws(

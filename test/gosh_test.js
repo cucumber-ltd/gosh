@@ -20,7 +20,7 @@ describe('Gosh', () => {
     const susan = { name: 'Susan', hair: 'grey' }
     const makeId = document => document.name
     const store = new DocumentStore({ makeId })
-      .withGroupedIndex(document => document.hair)
+      .withOneToManyIndex(document => document.hair)
       .put(dave)
       .put(dan)
       .put(susan)
