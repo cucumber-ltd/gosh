@@ -31,7 +31,7 @@ describe('DocumentStore', () => {
       const store = new DocumentStore({ makeId })
         .withUniqueIndex(document => document.name)
         .put(dave)
-      const actual = store.find({ name: 'Dave' })
+      const actual = store.get({ name: 'Dave' })
       assert.deepEqual(actual, dave)
     })
 
@@ -40,7 +40,7 @@ describe('DocumentStore', () => {
       const store = new DocumentStore({ makeId })
         .withUniqueIndex(document => document.name)
         .put(dave)
-      const actual = store.find({ name: 'David' })
+      const actual = store.get({ name: 'David' })
       assert.deepEqual(actual, null)
     })
 
@@ -51,16 +51,16 @@ describe('DocumentStore', () => {
         .withUniqueIndex(document => document.name)
         .put(dave)
         .put(updatedDave)
-      const actual = store.find({ name: 'David' })
+      const actual = store.get({ name: 'David' })
       assert.deepEqual(actual, updatedDave)
-      assert.equal(store.find({ name: 'Dave' }), null)
+      assert.equal(store.get({ name: 'Dave' }), null)
     })
 
     it('returns null for an invalid query', () => {
       const store = new DocumentStore({ makeId }).withUniqueIndex(
         document => document.name
       )
-      assert.equal(store.find({ age: '30' }), null)
+      assert.equal(store.get({ age: '30' }), null)
     })
 
     it('allows an extra optional unique index', () => {
@@ -71,8 +71,8 @@ describe('DocumentStore', () => {
         .withOptionalUniqueIndex(document => document.age)
         .put(dave)
         .put(sally)
-      assert.equal(store.find({ age: '30' }), dave)
-      assert.equal(store.find({ name: 'Sally' }), sally)
+      assert.equal(store.get({ age: '30' }), dave)
+      assert.equal(store.get({ name: 'Sally' }), sally)
     })
   })
 
@@ -113,7 +113,7 @@ describe('DocumentStore', () => {
       assert.deepEqual(actual, [])
     })
 
-    it('#find throws an error if you find more than one thing', () => {
+    it('#get throws an error if you get more than one thing', () => {
       const dave = { name: 'Dave', hair: 'red' }
       const dan = { name: 'Dan', hair: 'red' }
       const makeId = document => document.name
@@ -122,7 +122,7 @@ describe('DocumentStore', () => {
         .put(dave)
         .put(dan)
       assert.throws(
-        () => store.find({ hair: 'red' }),
+        () => store.get({ hair: 'red' }),
         /Only expected to get one result but got 2/
       )
     })
@@ -135,7 +135,7 @@ describe('DocumentStore', () => {
         .withUniqueIndex(document => document.name)
         .put(dave)
         .delete(dave)
-      assert.equal(store.find({ name: 'Dave' }), null)
+      assert.equal(store.get({ name: 'Dave' }), null)
     })
 
     it('deletes existing documents by an indexed query', () => {
@@ -144,7 +144,7 @@ describe('DocumentStore', () => {
         .withUniqueIndex(document => document.name)
         .put(dave)
         .delete({ name: 'Dave' })
-      assert.equal(store.find({ name: 'Dave' }), null)
+      assert.equal(store.get({ name: 'Dave' }), null)
     })
   })
 
@@ -158,7 +158,7 @@ describe('DocumentStore', () => {
       })
         .put(dave)
         .withUniqueIndex(document => document.name)
-      assert.deepEqual(store.find({ name: 'Dave' }), dave)
+      assert.deepEqual(store.get({ name: 'Dave' }), dave)
     })
 
     it('can add multiple indices', () => {
@@ -171,7 +171,7 @@ describe('DocumentStore', () => {
         .put(dave)
         .withUniqueIndex(document => document.name)
         .withUniqueIndex(document => document.age.toString())
-      assert.deepEqual(store.find({ age: 30 }), dave)
+      assert.deepEqual(store.get({ age: 30 }), dave)
     })
   })
 })
