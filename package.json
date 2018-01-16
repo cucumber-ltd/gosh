@@ -9,17 +9,15 @@
     "test": "mocha"
   },
   "devDependencies": {
-    "eslint": "^4.9.0",
     "eslint-config-prettier": "^2.6.0",
     "eslint-plugin-mocha": "^4.11.0",
     "eslint-plugin-prettier": "^2.3.1",
     "mocha": "^4.1.0",
-    "prettier": "^1.7.4"
+    "prettier": "^1.7.4",
+    "eslint": "^4.9.0"
   },
   "dependencies": {
-    "debug": "^3.1.0",
     "monet": "^0.8.10",
-    "supports-color": "^5.1.0",
     "value-object": "^0.0.10"
   }
 }
