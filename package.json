@@ -1,10 +1,13 @@
 {
   "name": "gosh",
   "version": "1.0.0",
-  "description": "Glorious Object Storage Home",
+  "description": "Great Object Storage Hooray!",
   "main": "lib/gosh.js",
   "author": "Matt Wynne",
   "license": "MIT",
+  "scripts": {
+    "test": "mocha"
+  },
   "devDependencies": {
     "eslint": "^4.9.0",
     "eslint-config-prettier": "^2.6.0",
