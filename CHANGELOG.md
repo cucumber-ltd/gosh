@@ -8,7 +8,29 @@ This document is formatted according to the principles of [Keep A CHANGELOG](htt
 
 ----
 
-## [In Git](https://github.com/mattwynne/gosh/compare/v1.0.0...master) (Not released)
+## [In Git - targetting v2.1.0](https://github.com/mattwynne/gosh/compare/v2.0.0...master) (Not released)
+
+### Added
+
+* Implicitly add a unique index on the ID field
+
+### Changed
+
+* N/A
+
+### Deprecated
+
+* N/A
+
+### Removed
+
+* `DocumentStore#find` replaced with `DocumentStore#get`
+
+### Fixed
+
+* N/A
+
+## [v2.0.0](https://github.com/mattwynne/gosh/compare/v1.0.0...v2.0.0) (Not released)
 
 ### Added
 
