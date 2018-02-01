@@ -27,4 +27,13 @@ describe('Gosh', () => {
     const actual = store.all({ hair: 'red' })
     assert.deepEqual(actual, [dave, dan])
   })
+
+  it('implicitly adds a unique index on the Id', () => {
+    const dave = { uid: 'abcdef123' }
+    const makeId = document => document.uid
+    const store = new DocumentStore({ makeId })
+      .put(dave)
+    const actual = store.get({ uid: 'abcdef123' })
+    assert.equal(actual, dave)
+  })
 })
