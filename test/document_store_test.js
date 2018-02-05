@@ -18,7 +18,7 @@ describe('DocumentStore', () => {
 
   it('returns all the values', () => {
     const dave = { name: 'Dave', uid: '1234' }
-    const store = new DocumentStore({ makeId })
+    const store = new DocumentStore(makeId)
       .withUniqueIndex(document => document.name)
       .put(dave)
     const actual = store.values()
@@ -28,7 +28,7 @@ describe('DocumentStore', () => {
   context('with a single unique index', () => {
     it('finds a single document', () => {
       const dave = { name: 'Dave', uid: '1234' }
-      const store = new DocumentStore({ makeId })
+      const store = new DocumentStore(makeId)
         .withUniqueIndex(document => document.name)
         .put(dave)
       const actual = store.get({ name: 'Dave' })
@@ -37,7 +37,7 @@ describe('DocumentStore', () => {
 
     it('returns null when no result is found', () => {
       const dave = { name: 'Dave', uid: '1234' }
-      const store = new DocumentStore({ makeId })
+      const store = new DocumentStore(makeId)
         .withUniqueIndex(document => document.name)
         .put(dave)
       const actual = store.get({ name: 'David' })
@@ -47,7 +47,7 @@ describe('DocumentStore', () => {
     it('updates a document with the same ID', () => {
       const dave = { name: 'Dave', uid: '1234' }
       const updatedDave = { name: 'David', uid: '1234' }
-      const store = new DocumentStore({ makeId })
+      const store = new DocumentStore(makeId)
         .withUniqueIndex(document => document.name)
         .put(dave)
         .put(updatedDave)
@@ -57,7 +57,7 @@ describe('DocumentStore', () => {
     })
 
     it('returns null for an invalid query', () => {
-      const store = new DocumentStore({ makeId }).withUniqueIndex(
+      const store = new DocumentStore(makeId).withUniqueIndex(
         document => document.name
       )
       assert.equal(store.get({ age: '30' }), null)
@@ -66,7 +66,7 @@ describe('DocumentStore', () => {
     it('allows an extra optional unique index', () => {
       const dave = { name: 'Dave', age: 30, uid: '1234' }
       const sally = { name: 'Sally', uid: '4567' }
-      const store = new DocumentStore({ makeId })
+      const store = new DocumentStore(makeId)
         .withUniqueIndex(document => document.name)
         .withOptionalUniqueIndex(document => document.age)
         .put(dave)
@@ -82,7 +82,7 @@ describe('DocumentStore', () => {
       const dan = { name: 'Dan', hair: 'red' }
       const susan = { name: 'Susan', hair: 'grey' }
       const makeId = document => document.name
-      const store = new DocumentStore({ makeId })
+      const store = new DocumentStore(makeId)
         .withOneToManyIndex(document => document.hair)
         .put(dave)
         .put(dan)
@@ -95,7 +95,7 @@ describe('DocumentStore', () => {
       const dave = { name: 'Dave', public: true }
       const dan = { name: 'Dan', public: false }
       const makeId = document => document.name
-      const store = new DocumentStore({ makeId })
+      const store = new DocumentStore(makeId)
         .withOneToManyIndex(document => document.public.toString())
         .put(dave)
         .put(dan)
@@ -106,7 +106,7 @@ describe('DocumentStore', () => {
     it('#all finds no documents when none match the query', () => {
       const susan = { name: 'Susan', hair: 'grey' }
       const makeId = document => document.name
-      const store = new DocumentStore({ makeId })
+      const store = new DocumentStore(makeId)
         .withOneToManyIndex(document => document.hair)
         .put(susan)
       const actual = store.all({ hair: 'blue' })
@@ -117,7 +117,7 @@ describe('DocumentStore', () => {
       const dave = { name: 'Dave', hair: 'red' }
       const dan = { name: 'Dan', hair: 'red' }
       const makeId = document => document.name
-      const store = new DocumentStore({ makeId })
+      const store = new DocumentStore(makeId)
         .withOneToManyIndex(document => document.hair)
         .put(dave)
         .put(dan)
@@ -131,7 +131,7 @@ describe('DocumentStore', () => {
   describe('deleting documents', () => {
     it('deletes an existing document in a single unique index', () => {
       const dave = { name: 'Dave', uid: '1234' }
-      const store = new DocumentStore({ makeId })
+      const store = new DocumentStore(makeId)
         .withUniqueIndex(document => document.name)
         .put(dave)
         .delete(dave)
@@ -140,7 +140,7 @@ describe('DocumentStore', () => {
 
     it('deletes existing documents by an indexed query', () => {
       const dave = { name: 'Dave', uid: '1234' }
-      const store = new DocumentStore({ makeId })
+      const store = new DocumentStore(makeId)
         .withUniqueIndex(document => document.name)
         .put(dave)
         .delete({ name: 'Dave' })
@@ -152,9 +152,8 @@ describe('DocumentStore', () => {
     it('adds existing documents to the new index', () => {
       const dave = { name: 'Dave', uid: '1234' }
       const indices = []
-      const store = new DocumentStore({
+      const store = new DocumentStore(makeId, {
         indices,
-        makeId,
       })
         .put(dave)
         .withUniqueIndex(document => document.name)
@@ -164,9 +163,8 @@ describe('DocumentStore', () => {
     it('can add multiple indices', () => {
       const dave = { name: 'Dave', age: 30, uid: '1234' }
       const indices = []
-      const store = new DocumentStore({
+      const store = new DocumentStore(makeId, {
         indices,
-        makeId,
       })
         .put(dave)
         .withUniqueIndex(document => document.name)
