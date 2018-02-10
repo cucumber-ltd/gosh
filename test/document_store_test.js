@@ -76,6 +76,34 @@ describe('DocumentStore', () => {
     })
   })
 
+  context('converting to a query interface', () => {
+    const dave = { name: 'Dave', hair: 'red' }
+    const dan = { name: 'Dan', hair: 'red' }
+    const susan = { name: 'Susan', hair: 'grey' }
+    const store = new DocumentStore(document => document.name)
+      .withOneToManyIndex(document => document.hair)
+      .put(dave)
+      .put(dan)
+      .put(susan)
+    const people = store.forQueries()
+
+    it('offers all the query methods', () => {
+      people.get({ name: 'Dave' })
+      people.all({ hair: 'red' })
+    })
+
+    it('does not offer any methods that update the store', () => {
+      assert.throws(() => people.put({ name: 'Matt', hair: 'thin' }), TypeError)
+      assert.throws(() => people.delete({ name: 'Dave' }), TypeError)
+    })
+
+    it('continues to read updated state', () => {
+      const matt = { name: 'Matt', hair: 'thin' }
+      store.put(matt)
+      assert.deepEqual(people.get({ name: 'Matt' }), matt)
+    })
+  })
+
   context('with a single one-to-many index', () => {
     it('#all finds all documents matching a query', () => {
       const dave = { name: 'Dave', hair: 'red' }
