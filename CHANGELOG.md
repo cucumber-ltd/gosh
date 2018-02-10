@@ -7,11 +7,11 @@ This project adheres to [Semantic Versioning](http://semver.org).
 This document is formatted according to the principles of [Keep A CHANGELOG](http://keepachangelog.com).
 
 ----
-## [In Git - targetting v2.1.0](https://github.com/mattwynne/gosh/compare/v2.0.0...master) (Not released)
+## [In Git - targetting v3.1.0](https://github.com/mattwynne/gosh/compare/v3.0.0...master) (Not released)
 
 ### Added
 
-* N/A
+* DocumentStore#forQueries returns a read-only interface onto the store
 
 ### Changed
 
