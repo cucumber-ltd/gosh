@@ -7,7 +7,30 @@ This project adheres to [Semantic Versioning](http://semver.org).
 This document is formatted according to the principles of [Keep A CHANGELOG](http://keepachangelog.com).
 
 ----
-## [In Git - targetting v3.1.0](https://github.com/mattwynne/gosh/compare/v3.0.0...master) (Not released)
+## [In Git - targetting v4.0.0](https://github.com/mattwynne/gosh/compare/v3.1.0...master) (Not released)
+
+### Added
+
+* DocumentStore#withIndexOfAll for indexing many-many relationships
+
+### Changed
+
+* `DocumentStore#withIndex` now works instead of the old `withUniqueIndex`, `withOptionalUniqueIndex` and `withOneToManyIndex`
+
+### Deprecated
+
+* N/A
+
+### Removed
+
+* `DocumentStore#withUniqueIndex`, `DocumentStore#withOptionalUniqueIndex` and `DocumentStore#withOneToManyIndex`
+
+### Fixed
+
+* N/A
+
+
+## [v3.1.0](https://github.com/mattwynne/gosh/compare/v3.0.0...v3.1.0) (Not released)
 
 ### Added
 
