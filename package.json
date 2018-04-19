@@ -17,7 +17,6 @@
     "prettier": "^1.7.4"
   },
   "dependencies": {
-    "monet": "^0.8.10",
-    "value-object": "^0.0.10"
+    "monet": "^0.8.10"
   }
 }
