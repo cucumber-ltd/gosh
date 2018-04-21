@@ -11,7 +11,7 @@ This document is formatted according to the principles of [Keep A CHANGELOG](htt
 
 ### Added
 
-* N/A
+* `DocumentStore#updateAll` to let you update document(s) matching a query with a function.
 
 ### Changed
 
