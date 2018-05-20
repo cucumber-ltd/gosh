@@ -15,7 +15,7 @@ This document is formatted according to the principles of [Keep A CHANGELOG](htt
 
 ### Changed
 
-* N/A
+* API for building stores has been simplified.
 
 ### Deprecated
 
