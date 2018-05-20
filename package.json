@@ -1,6 +1,6 @@
 {
   "name": "gosh",
-  "version": "4.3.0",
+  "version": "5.0.0",
   "description": "Great Object Storage Hooray!",
   "main": "lib/gosh.js",
   "author": "Matt Wynne",
