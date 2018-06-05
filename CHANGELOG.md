@@ -7,7 +7,9 @@ This project adheres to [Semantic Versioning](http://semver.org).
 This document is formatted according to the principles of [Keep A CHANGELOG](http://keepachangelog.com).
 
 ----
-## [In Git](https://github.com/mattwynne/gosh/compare/v4.3.0...master) (Not released)
+## [In Git](https://github.com/cucumber-ltd/gosh/compare/v5.2.0...master) (Not released)
+
+## [v5.2.0](https://github.com/mattwynne/gosh/compare/v4.3.0...v5.2.0) (Not released)
 
 ### Added
 
@@ -16,6 +18,7 @@ This document is formatted according to the principles of [Keep A CHANGELOG](htt
 ### Changed
 
 * API for building stores has been simplified.
+* Everything is async, ready for a persistent store!
 
 ### Deprecated
 
