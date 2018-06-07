@@ -7,9 +7,31 @@ This project adheres to [Semantic Versioning](http://semver.org).
 This document is formatted according to the principles of [Keep A CHANGELOG](http://keepachangelog.com).
 
 ----
-## [In Git](https://github.com/cucumber-ltd/gosh/compare/v5.2.0...master) (Not released)
+## [In Git](https://github.com/cucumber-ltd/gosh/compare/v5.3.0...master) (Not released)
 
-## [v5.2.0](https://github.com/mattwynne/gosh/compare/v4.3.0...v5.2.0) (Not released)
+## [v5.3.0](https://github.com/mattwynne/gosh/compare/v5.2.0...v5.3.0)
+
+### Added
+
+* N/A
+
+### Changed
+
+* N/A
+
+### Deprecated
+
+* N/A
+
+### Removed
+
+* N/A
+
+### Fixed
+
+* timing issue - missing await
+
+## [v5.2.0](https://github.com/mattwynne/gosh/compare/v4.3.0...v5.2.0)
 
 ### Added
 
@@ -32,7 +54,7 @@ This document is formatted according to the principles of [Keep A CHANGELOG](htt
 
 * N/A
 
-## [In Git](https://github.com/mattwynne/gosh/compare/v4.2.0...v4.3.0) (Not released)
+## [In Git](https://github.com/mattwynne/gosh/compare/v4.2.0...v4.3.0)
 
 ### Added
 
@@ -54,7 +76,7 @@ This document is formatted according to the principles of [Keep A CHANGELOG](htt
 
 * N/A
 
-## [In Git](https://github.com/mattwynne/gosh/compare/v4.1.0...v4.2.0) (Not released)
+## [In Git](https://github.com/mattwynne/gosh/compare/v4.1.0...v4.2.0)
 
 ### Added
 
