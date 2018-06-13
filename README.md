@@ -41,6 +41,7 @@ The reason for having a unique key on your store is so that Gosh knows when to u
 ## Multiple indices
 
 Suppose you want to fetch people out by another attribute. Let's define out store with another index on it:
+
     const PeopleStore = DocumentStore.define('id', 'name')
 
 Now we can find all the people named Dave:
