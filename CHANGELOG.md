@@ -17,7 +17,7 @@ This document is formatted according to the principles of [Keep A CHANGELOG](htt
 
 ### Changed
 
-* N/A
+* Events changed from three `insert`, `update` and `delete` events to a single `change` event with `from` and `to` properties.
 
 ### Deprecated
 
