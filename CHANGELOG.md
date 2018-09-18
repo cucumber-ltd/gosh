@@ -9,6 +9,50 @@ This document is formatted according to the principles of [Keep A CHANGELOG](htt
 ----
 ## [In Git](https://github.com/cucumber-ltd/gosh/compare/v5.3.0...master) (Not released)
 
+## [v5.3.2](https://github.com/cucumber-ltd/gosh/compare/v5.3.1...v5.3.2)
+
+### Added
+
+* `DocumentStore#getByOneOf` to query store with `OR` operator
+
+### Changed
+
+* N/A
+
+### Deprecated
+
+* N/A
+
+### Removed
+
+* N/A
+
+### Fixed
+
+* N/A
+
+## [v5.3.1](https://github.com/cucumber-ltd/gosh/compare/v5.3.0...v5.3.1)
+
+### Added
+
+* Proper class inheritence in DocumentStore
+
+### Changed
+
+* N/A
+
+### Deprecated
+
+* N/A
+
+### Removed
+
+* N/A
+
+### Fixed
+
+* N/A
+
 ## [v5.3.0](https://github.com/mattwynne/gosh/compare/v5.2.0...v5.3.0)
 
 ### Added
