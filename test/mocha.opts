@@ -1,3 +1,0 @@
---recursive
-lib/*.spec.js
--w
