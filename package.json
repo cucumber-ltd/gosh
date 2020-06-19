@@ -16,7 +16,9 @@
     "mocha": "^5.2.0",
     "prettier": "^1.14.3"
   },
-  "dependencies": {},
+  "dependencies": {
+    "pg": "^7.4.3"
+  },
   "prettier": {
     "semi": false,
     "singleQuote": true
